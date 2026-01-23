@@ -1,12 +1,26 @@
-![](public/img/psvita.gif)
+# PSMRC-Nodles
 
-I havent maintained this project in over 5 years. However, due to some interest decided to update the repo with a readme file and quickly test to see if things still work. So bear with me.
+<div align="center">
+  <img src="public/img/psvita.gif" alt="PSMRC-Node" />
+</div>
 
-# Requirements
+A dead Heroku website made to convert Minecraft Resource Packs to PSVita Resource Packs brought back to life with Render
+
+Remember to support <a href="https://github.com/psiie/PSMRC-Node">the original project</a>, even though it might be dead now
+
+All credits to <a href="https://github.com/psiie">Psiie/Indigoferra</a>, the creator of the original project. She also made <a href="https://github.com/psiie/PSMinecraft-Resource-Converter">PSMRC</a>, which is basically the same project but made as an application instead of a website, go check it out!
+
+And lets not forget to link the website, which is available [here](https://psmrc-nodles.onrender.com)!
+
+Now, onto the 
+
+# Local Stuff
+
+## Requirements
 - Imagemagick installed on your command line
 - node.js installed (v23.11.0 seems to work)
 
-# How to run
+## How To Run
 - `npm start`
 - Navigate to localhost:3000
 - Select the texture pack you want to convert
@@ -23,4 +37,8 @@ Optional: Not all texture conversions are implemented. To support fallback (lega
 (Possible IDs: PCSE00491, PCSB00560, PCSB00560, VCJS-10010)
 (Folder Path: Common/res/TitleUpdate/res) 
 
+# Example
+
 ![](public/img/how_to_select_multi_files.gif)
+
+Latest Update: 2026.01.23
