@@ -7,6 +7,12 @@ logs
 *.log
 npm-debug.log*
 
+# App runtime artifacts (uploads, generated packs)
+uploads/*-unzip
+uploads/*-create
+public/pack/*.zip
+!public/pack/.keep
+
 # Runtime data
 pids
 *.pid

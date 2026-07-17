@@ -1,12 +1,11 @@
 var fs = require('fs-extra');
-var rmdir = require('rmdir');
 const path = require('path');
 
 module.exports = {
 
   cleanByCookie: function(cookie) {
-    rmdir(__dirname + '/uploads/' + cookie + '-create', () => console.log(`Cleanup: deleted ${cookie}-create dir.`))
-    rmdir(__dirname + '/uploads/' + cookie + '-unzip', () => console.log(`Cleanup: deleted ${cookie}-unzip dir`))
+    fs.remove(__dirname + '/uploads/' + cookie + '-create', () => console.log(`Cleanup: deleted ${cookie}-create dir.`))
+    fs.remove(__dirname + '/uploads/' + cookie + '-unzip', () => console.log(`Cleanup: deleted ${cookie}-unzip dir`))
     fs.unlink(__dirname + '/uploads/' + cookie, () => console.log(`Cleanup: deleted ${cookie} file`))
   },
 
@@ -20,7 +19,7 @@ module.exports = {
       if (/keep/.test(file)) return;
       
       if ((currTime - fileTime) > 1800) {
-        rmdir(file, () => console.log(`Cleanup: deleted ${file} by experation. ${currTime - fileTime}`))
+        fs.remove(file, () => console.log(`Cleanup: deleted ${file} by experation. ${currTime - fileTime}`))
       }
     }
 

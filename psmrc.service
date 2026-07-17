@@ -1,0 +1,27 @@
+[Unit]
+Description=PSMRC-Nodles - Minecraft to PS Vita resource pack converter
+After=network.target
+
+[Service]
+Type=simple
+User=psmrc
+Group=psmrc
+WorkingDirectory=/opt/psmrc-nodles
+# Replace with the real path to node on this server - run `which node` to confirm.
+# If Node was installed via nvm, this will NOT be /usr/bin/node - see DEPLOYMENT.md.
+ExecStart=/usr/bin/node index.js
+Restart=on-failure
+RestartSec=5
+
+Environment=NODE_ENV=production
+Environment=PORT=3001
+Environment=HOST=127.0.0.1
+
+# Basic hardening - safe defaults for an app that only needs its own directory
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

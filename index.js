@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-var formidable = require('formidable');
+var { IncomingForm } = require('formidable');
 var cookieParser = require('cookie-parser');
 var psmrc = require('./psmrc');
 var cleanup = require('./cleanup');
@@ -59,26 +59,24 @@ app.post('/upload', function(req, res){
   cleanup.cleanByExpiration();
 
   console.log('Express: upload cookie ', req.cookies);
-  var form = new formidable.IncomingForm(); // create an incoming form object
-  form.multiples = true; // specify that we want to allow the user to upload multiple files in a single request
-  form.uploadDir = path.join(__dirname, '/uploads'); // store all uploads in the /uploads directory
+  var form = new IncomingForm({ uploadDir: path.join(__dirname, '/uploads') }); // create an incoming form object; multiple files are handled by default in formidable v3
   const toggles = {
     canHasItems: false,
     canHasTerrain: false,
   }
 
   form.on('file', function(field, file) {
-    const { type } = file;
+    const { mimetype } = file;
 
-    if (/png/.test(type)) {
-      md5File(file.path).then(hash => {
+    if (/png/.test(mimetype)) {
+      md5File(file.filepath).then(hash => {
         if (HASHES.ITEMS.indexOf(hash) !== -1) toggles.canHasItems = true;
         if (HASHES.TERRAIN.indexOf(hash) !== -1) toggles.canHasTerrain = true;
-        fs.unlink(file.path, () => console.log('Express: deleting uploaded item/terrain image file'))
+        fs.unlink(file.filepath, () => console.log('Express: deleting uploaded item/terrain image file'))
       });
     } 
-    else if (/zip/.test(type)) fs.rename(file.path, path.join(form.uploadDir, req.cookies.cookieName));
-    else fs.unlink(file.path, () => console.log('Express: unknown file uploaded. deleting'))
+    else if (/zip/.test(mimetype)) fs.rename(file.filepath, path.join(form.uploadDir, req.cookies.cookieName));
+    else fs.unlink(file.filepath, () => console.log('Express: unknown file uploaded. deleting'))
     
   });
 
@@ -98,6 +96,8 @@ app.post('/upload', function(req, res){
   form.parse(req); // parse the incoming request containing the form data
 });
 
-app.listen(process.env.PORT || 3000, function(){
-  console.log('Express: Server listening on port');
+const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '127.0.0.1'; // loopback-only by default; the app sits behind Cloudflare Tunnel / a reverse proxy, so it never needs to be reachable directly
+app.listen(PORT, HOST, function(){
+  console.log(`Express: Server listening on ${HOST}:${PORT}`);
 });

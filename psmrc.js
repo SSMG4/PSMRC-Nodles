@@ -159,8 +159,9 @@ module.exports = function(res, cookie, options = {}) {
   try {
     fs.createReadStream(__dirname + '/uploads/' + cookie)
       .pipe( unzip.Extract({ path: __dirname + '/uploads/' + cookie + '-unzip' }) )
-      // .on('finish', () => {fixNested().then( () => {} )}
-      .on('finish', () => {
+      // Note: 'finish' fires before all extracted files/dirs are flushed to disk;
+      // 'close' reliably fires only once extraction is fully complete.
+      .on('close', () => {
         console.log('Psmrc.js: finished unzip');
         fixNested(cookie).then(() => {
           process(res, cookie, options)} )
