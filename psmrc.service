@@ -7,14 +7,12 @@ Type=simple
 User=psmrc
 Group=psmrc
 WorkingDirectory=/opt/psmrc-nodles
-# Replace with the real path to node on this server - run `which node` to confirm.
-# If Node was installed via nvm, this will NOT be /usr/bin/node - see DEPLOYMENT.md.
-ExecStart=/usr/bin/node index.js
+ExecStart=/usr/bin/node index.js # If this is not your Node.js path replace it with a correct path that 
 Restart=on-failure
 RestartSec=5
 
 Environment=NODE_ENV=production
-Environment=PORT=3001
+Environment=PORT=3001 # If occupied use another free port
 Environment=HOST=127.0.0.1
 
 # Basic hardening - safe defaults for an app that only needs its own directory

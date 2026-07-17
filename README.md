@@ -47,6 +47,6 @@ Optional: Not all texture conversions are implemented. To support fallback (lega
 
 # Deployment
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for how this is deployed and kept running on the server.
+See [DEPLOYMENT.md](DEPLOYMENT.md) for how this is deployed and kept running on the server. BE CAREFUL USING IT, YOU MIGHT GET CONFUSED.
 
 Latest Update: 2026.07.16
